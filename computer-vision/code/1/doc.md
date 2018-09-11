@@ -200,6 +200,6 @@ g++ -lX11 -L/usr/X11/lib -I/usr/X11/include -std=c++11 hw1-main.cpp -o hw1-mac
 ### Windows
 
 ```sh
-g++ -lgdi32 -std=c++11 hw1-main.cpp -o hw1.exe
+g++ -std=c++11 hw1-main.cpp -o hw1.exe -lgdi32
 ```
 
