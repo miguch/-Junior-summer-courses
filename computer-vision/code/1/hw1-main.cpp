@@ -20,7 +20,11 @@ int main() {
     thread t_disp([&](){
         obj->displayImage();
     });
+#ifdef _WIN32
+    Sleep(1);
+#else
     sleep(1);
+#endif
     obj->changeColor();
     obj->drawBlueCircle();
     obj->drawYellowCircle();
