@@ -203,3 +203,4 @@ g++ -lX11 -L/usr/X11/lib -I/usr/X11/include -std=c++11 hw1-main.cpp -o hw1-mac
 g++ -std=c++11 hw1-main.cpp -o hw1.exe -lgdi32
 ```
 
+压缩包中提供了编译好的 Mac 和 Windows 下的可执行文件，命名为`hw1-mac`和`hw1.exe`。
