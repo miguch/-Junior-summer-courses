@@ -3,6 +3,9 @@
         "*.m": "matlab",
         "iostream": "cpp",
         "ostream": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "thread": "cpp",
+        "__config": "cpp",
+        "__nullptr": "cpp"
     }
 }

@@ -1,4 +1,3 @@
-#include <iostream>
 #include "CImg.h"
 #include <cmath>
 

@@ -1,5 +1,6 @@
 #include "hw1.h"
 #include <iostream>
+#include <thread>
 
 using namespace std;
 
@@ -16,12 +17,16 @@ int main() {
         cerr << "Wrong Input! Exiting..." << endl;
         exit(1);
     }
-    //obj.displayImage();
+    thread t_disp([&](){
+        obj->displayImage();
+    });
+    sleep(1);
     obj->changeColor();
     obj->drawBlueCircle();
     obj->drawYellowCircle();
     obj->drawBlueLine();
     obj->displayImage();
+    t_disp.join();
     obj->saveToFile();
     delete obj;
 }
