@@ -1,7 +1,7 @@
 #include "canny.h"
-#define reflect_forXY(img, x, y) cimg_forXY(img, x + c_scale, y + c_scale)
 #define reflectXY(img, x, y) img(x + c_scale, y + c_scale)
 #define cannyXY(img, x, y) img(x + 2 * scale, y + 2 * scale)
+#define nmsXY(img, x, y) img(x+1, y+1)
 
 /* Constructor for Canny */
 Canny::Canny(string filename, bool skipNMS, int thresh1, int thresh2, int scale, float sigma) : origin(filename.c_str()) {
@@ -169,28 +169,119 @@ CImg<unsigned char> Canny::runCanny() {
     /* STEP: 1 --- GAUSSIAN SMOOTHING (Already done in constructor) */
 
     /* ALLOCATING MEM */
-    int ncols = origin.width(), nrows = origin.height();
-    CImg<float> fx(ncols+4*c_scale, nrows+4*c_scale),
-                fy(ncols+4*c_scale, nrows+4*c_scale),
-                fxy(ncols+4*c_scale, nrows+4*c_scale),
-                fxx(ncols+4*c_scale, nrows+4*c_scale),
-                fyy(ncols+4*c_scale, nrows+4*c_scale),
-                gradient(ncols+2*c_scale, nrows+2*c_scale),
-                anglec(ncols+4*c_scale, nrows+4*c_scale);
+    int ncols = origin.width(), nrows = origin.height(), scale = c_scale;
+    CImg<float> gradient(ncols+2, nrows+2),
+                dir(ncols, nrows);
 
-    CImg<unsigned char> edgemap(ncols, nrows);
-
-    printf("-------------------------------------------\n");
-    printf(" Allocated memory for edgemap\n");
 
     reflect(gauss_smooth, nrows, ncols, 2 * c_scale);
 
     for (int i = 0; i < ncols; i++) {
         for (int j = 0; j < nrows; j++) {
+            //Sobel
+            float gx = -cannyXY(gauss_smooth, i-1, j-1) - 2 * cannyXY(gauss_smooth, i-1, j) -
+                    cannyXY(gauss_smooth, i-1, j+1) + cannyXY(gauss_smooth, i+1, j-1) + 2 * cannyXY(gauss_smooth, i+1, j) +
+                    cannyXY(gauss_smooth, i+1, j+1);
+            float gy = -cannyXY(gauss_smooth, i-1, j-1) - 2 * cannyXY(gauss_smooth, i, j-1) -
+                       cannyXY(gauss_smooth, i+1, j-1) + cannyXY(gauss_smooth, i-1, j+1) + 2 * cannyXY(gauss_smooth, i, j+1) +
+                       cannyXY(gauss_smooth, i+1, j+1);
+            nmsXY(gradient,i,j) = sqrt(gy * gy + gx * gx);
+            dir(i, j) = atan(gy / gx) * (180 / M_PI);
+        }
+    }
+    reflect(gradient, nrows, ncols, 1);
 
+    /*Non-Maximum Suppression */
+    auto edges = nms(gradient, dir);
+    hysThres(edges, 0);
+    cimg_forXY(edges, x, y) {
+        if (edges(x, y) != 255) edges(x, y) = 0;
+    }
+    return edges;
+}
+
+/*Non-Maximum Suppression */
+/* Returns a unsigned char matrix generated from gradient matrix after nms*/
+CImg<unsigned char> Canny::nms(CImg<float> &gradient, CImg<float> &dir) {
+    int ncols = origin.width(), nrows = origin.height(),
+            edgepoints = 0;
+
+    /*  Init all with value 0 */
+    CImg<unsigned char> edgeMap(ncols, nrows, 1, 1, 0);
+
+    printf("============================================================\n");
+    printf(" Performing Non_maximum-Supression\n");
+
+    cimg_forXY(origin, x, y) {
+        float direction = dir(x, y);
+        float val = 0, neg1 = 0, pos1 = 0, neg2, pos2;
+        if (direction >= -90 && direction <= -45) {
+            neg1 = nmsXY(gradient, x-1, y);
+            pos1 = nmsXY(gradient, x-1, y+1);
+            neg2 = nmsXY(gradient, x+1, y);
+            pos2 = nmsXY(gradient, x+1, y+1);
+        } else if (direction > -45 && direction <= 45) {
+            neg1 = nmsXY(gradient, x, y-1);
+            pos1 = nmsXY(gradient, x+1, y-1);
+            neg2 = nmsXY(gradient, x, y+1);
+            pos2 = nmsXY(gradient, x+1, y+1);
+        }  else {
+            neg1 = nmsXY(gradient, x-1, y);
+            pos1 = nmsXY(gradient, x-1, y-1);
+            neg2 = nmsXY(gradient, x+1, y);
+            pos2 = nmsXY(gradient, x+1, y-1);
+        }
+        if (nmsXY(gradient, x, y) < pos1+(neg1-pos1)*tan(direction * M_PI / 180.0 ) ||
+            nmsXY(gradient, x, y) < pos2+(neg2-pos2)*tan(direction * M_PI / 180.0 )) {
+            edgeMap(x, y) = 0;
+        } else {
+            edgepoints++;
+            edgeMap(x, y) = nmsXY(gradient, x, y);
+        }
+    }
+    printf(" Number of Edgepoints after nms is %d \n", edgepoints);
+
+    return edgeMap;
+}
+
+/* Hysteresis Thresholding */
+/* Recursively marks edge pixels */
+/* Returns the input reference */
+void Canny::hysThres(CImg<unsigned char> &edgeMap, int count) {
+    bool changed = false;
+    int thresh1 = min(c_thresh2, c_thresh1),
+        thresh2 = max(c_thresh2, c_thresh1);
+
+    printf("Run %d\n", count);
+
+    cimg_forXY(edgeMap, x, y) {
+        if (edgeMap(x, y) == 255) continue;
+        if (edgeMap(x, y) >= thresh2) {
+            changed = true;
+            edgeMap(x, y) = 255;
+        } else if (edgeMap(x, y) <= thresh1) {
+            edgeMap(x, y) = 0;
+        } else {
+            for (int i = x - 1; i <= x + 1; i++) {
+                for (int j = y - 1; j <= y + 1; j++) {
+                    if (i < 0 || i == edgeMap.width() || j < 0 || j == edgeMap.height())
+                        continue;
+                    if (edgeMap(i, j) == 255) {
+                        changed = true;
+                        edgeMap(x, y) = 255;
+                        break;
+                    }
+                }
+            }
         }
     }
 
+    if (changed) {
+        hysThres(edgeMap, count + 1);
+    }
 
+    printf("The lower threshold used = %d \n",thresh1);
+    printf("The Upper threshold used = %d \n",thresh2);
+    printf("==========================================\n");
 }
 

@@ -84,5 +84,9 @@ Canny process_args(int argc, char** argv) {
 
 int main(int argc, char** argv) {
     
-    process_args(argc, argv);
+    Canny c = process_args(argc, argv);
+    c.getSmoothImage().save("smoothed_image.bmp");
+    auto edges = c.runCanny();
+    edges.save("ecanny_map.bmp");
+    edges.display();
 }

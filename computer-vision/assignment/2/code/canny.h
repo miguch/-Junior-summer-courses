@@ -18,6 +18,8 @@ private:
     template <class T>
     static void reflect(CImg<T>& target, int nrows, int ncols, int c_scale);
     void gaussSmoothing(float sigma, int scale);
+    CImg<unsigned char> nms(CImg<float>& gradient, CImg<float> &dir);
+    void hysThres(CImg<unsigned char>& edgeMap, int count);
     
 public:
     Canny(string filename, bool skipNMS, int thresh1, int thresh2, int scale, float sigma);
