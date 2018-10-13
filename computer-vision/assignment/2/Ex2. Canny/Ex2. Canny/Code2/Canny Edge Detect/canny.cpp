@@ -40,7 +40,7 @@ canny::canny(String filename)
             cout << filter[i][j] << " ";
         }
     }
-    grayscaled = Mat(img.toGrayScale()); //Grayscale the image
+    grayscaled = Mat(toGrayScale()); //Grayscale the image
     gFiltered = Mat(useFilter(grayscaled, filter)); //Gaussian Filter
     sFiltered = Mat(sobel()); //Sobel Filter
 
@@ -61,6 +61,7 @@ canny::canny(String filename)
     imshow("Non-Maxima Supp.", non);
     imshow("Final", thres);
 
+    getchar();
 	}
 }
 
