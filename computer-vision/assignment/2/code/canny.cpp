@@ -1,10 +1,19 @@
 #include "canny.h"
-#define reflectXY(img, x, y) img(x + c_scale, y + c_scale)
-#define cannyXY(img, x, y) img(x + 2 * scale, y + 2 * scale)
-#define nmsXY(img, x, y) img(x+1, y+1)
+#include <unordered_set>
+#include <vector>
+#include <queue>
+#include <set>
+/*Image starts from (-scale, -scale) */
+#define scale1XY(img, x, y) img(x + c_scale, y + c_scale)
+/*Image starts from (-2*scale, -2*scale) */
+#define scale2XY(img, x, y) img(x + 2 * scale, y + 2 * scale)
+/*Image starts from (-1, -1) */
+#define p1XY(img, x, y) img(x+1, y+1)
+
 
 /* Constructor for Canny */
-Canny::Canny(string filename, bool skipNMS, int thresh1, int thresh2, int scale, float sigma) : origin(filename.c_str()) {
+Canny::Canny(string filename, bool skipNMS, int thresh1, int thresh2, int scale, float sigma) : origin(
+        filename.c_str()) {
     c_skipNMS = skipNMS;
     c_thresh1 = thresh1;
     c_thresh2 = thresh2;
@@ -21,9 +30,9 @@ Canny::Canny(string filename, bool skipNMS, int thresh1, int thresh2, int scale,
 void Canny::createGreyScale() {
     grey_scale = CImg<unsigned char>(origin.width() + 2 * c_scale, origin.height() + 2 * c_scale);
     cimg_forXY(origin, x, y) {
-        auto r = origin(x, y, 0), g = origin(x, y, 1), b = origin(x, y, 2);
-        reflectXY(grey_scale, x, y) = 0.299 * r + 0.587 * g + 0.114 * b;
-    }
+            auto r = origin(x, y, 0), g = origin(x, y, 1), b = origin(x, y, 2);
+            scale1XY(grey_scale, x, y) = 0.299 * r + 0.587 * g + 0.114 * b;
+        }
     reflect(grey_scale, origin.height(), origin.width(), c_scale);
     printf("-------------------------------------------------\n");
     printf("Finished processing: Reflected image by %d pixel\n", c_scale);
@@ -43,7 +52,7 @@ void Canny::gaussSmoothing(float sigma, int scale) {
     printf(" DEFINE A GAUSSIAN KERNEL\n");
 
     printf(" ALLOCATE MEMORY\n");
-    int grows = 4*scale +1, gcols = 4*scale +1,
+    int grows = 4 * scale + 1, gcols = 4 * scale + 1,
             nrows = origin.height(), ncols = origin.width();
     CImg<float> gauss_filter(gcols, grows);
     printf("ALLOCATED MEMORY\n");
@@ -57,12 +66,11 @@ void Canny::gaussSmoothing(float sigma, int scale) {
     int sum = 0;
     printf("------------------------------------------------------\n");
     printf(" FILLING UP GAUSS FILTER VALUES\n");
-    for( i = -(gcols/2); i <= gcols/2; i++)
-    {
-        for(j = -(grows/2);j <= grows/2; j++)
-        {
-            cannyXY(gauss_filter,i,j) = (1/(2*M_PI*sigma*sigma))*exp(-((i*i) + (j*j))/(2*sigma*sigma));
-            sum = sum + cannyXY(gauss_filter,i,j);
+    for (i = -(gcols / 2); i <= gcols / 2; i++) {
+        for (j = -(grows / 2); j <= grows / 2; j++) {
+            scale2XY(gauss_filter, i, j) =
+                    (1 / (2 * M_PI * sigma * sigma)) * exp(-((i * i) + (j * j)) / (2 * sigma * sigma));
+            sum = sum + scale2XY(gauss_filter, i, j);
         }
     }
 
@@ -71,27 +79,23 @@ void Canny::gaussSmoothing(float sigma, int scale) {
     /* INITIALIZE GAUSS SMOOTH*/
     printf("---------------------------------------------------------\n");
     printf("Initializing Gauss smooth matrix\n");
-    for(i=0;i<nrows; i++)
-    {
-        for(j=0;j< ncols; j++)
-        {
-            cannyXY(gauss_smooth,j,i) =0;
+    for (i = 0; i < nrows; i++) {
+        for (j = 0; j < ncols; j++) {
+            scale2XY(gauss_smooth, j, i) = 0;
         }
     }
 
     /* CONVOLVE WITH GAUSSIAN FILTER AND STORE IN GAUSS_SMOOTH */
     printf(" ------------------------------------------------------------\n");
     printf(" CONVOLUTION WITH GAUSS FILTER\n");
-    for(i=0;i<nrows; i++)
-    {
-        for(j=0;j< ncols; j++)
-        {
+    for (i = 0; i < nrows; i++) {
+        for (j = 0; j < ncols; j++) {
             /* CONVOLUTION*/
-            for( c = set; c <= -set; c++)
-            {
-                for(r = set;r <= -set; r++)
-                {
-                    cannyXY(gauss_smooth,j,i) = cannyXY(gauss_smooth,j,i) + (float)reflectXY(grey_scale,j+r,i+c) * cannyXY(gauss_filter,r,c);
+            for (c = set; c <= -set; c++) {
+                for (r = set; r <= -set; r++) {
+                    scale2XY(gauss_smooth, j, i) = scale2XY(gauss_smooth, j, i) +
+                                                   (float) scale1XY(grey_scale, j + r, i + c) *
+                                                   scale2XY(gauss_filter, r, c);
                 }
             }
         }
@@ -100,11 +104,9 @@ void Canny::gaussSmoothing(float sigma, int scale) {
     /* Write to class member smooth_img with type unsigned char */
     printf(" PURING RESULT\n");
     smooth_img = CImg<unsigned char>(ncols, nrows);
-    for(i=0;i<nrows; i++)
-    {
-        for(j=0;j< ncols; j++)
-        {
-            smooth_img(j,i) = (unsigned char)cannyXY(gauss_smooth,j,i);
+    for (i = 0; i < nrows; i++) {
+        for (j = 0; j < ncols; j++) {
+            smooth_img(j, i) = (unsigned char) scale2XY(gauss_smooth, j, i);
         }
     }
 
@@ -120,33 +122,30 @@ void Canny::gaussSmoothing(float sigma, int scale) {
 /* thereby leaving empty elements along the borders outside the image */
 /* The "reflect" function will then fill in those empty */
 /*After reflect is called, the start index of the actual image will be (scale, scale) */
-template <class T>
-void Canny::reflect(CImg<T>& target, int nrows, int ncols, int c_scale) {
+template<class T>
+void Canny::reflect(CImg<T> &target, int nrows, int ncols, int c_scale) {
     int i, j;
-    for(i = -c_scale; i < 0; i++)
-    {
-        for(j = -c_scale; j < 0; j++)
-            reflectXY(target, j, i) = reflectXY(target, -j-1, -i-1);
-        for(j = 0; j < ncols; j++)
-            reflectXY(target, j, i) = reflectXY(target, j, -i-1);
-        for(j = ncols; j < ncols+c_scale; j++)
-            reflectXY(target, j, i) = reflectXY(target, ncols+ncols-j-1, -i-1);
+    for (i = -c_scale; i < 0; i++) {
+        for (j = -c_scale; j < 0; j++)
+            scale1XY(target, j, i) = scale1XY(target, -j - 1, -i - 1);
+        for (j = 0; j < ncols; j++)
+            scale1XY(target, j, i) = scale1XY(target, j, -i - 1);
+        for (j = ncols; j < ncols + c_scale; j++)
+            scale1XY(target, j, i) = scale1XY(target, ncols + ncols - j - 1, -i - 1);
     }
-    for(i = 0; i < nrows; i++)
-    {
-        for(j = -c_scale; j < 0; j++)
-            reflectXY(target, j, i) = reflectXY(target, -j-1, i);
-        for(j = ncols; j < ncols+c_scale; j++)
-            reflectXY(target, j, i) = reflectXY(target, ncols+ncols-j-1, i);
+    for (i = 0; i < nrows; i++) {
+        for (j = -c_scale; j < 0; j++)
+            scale1XY(target, j, i) = scale1XY(target, -j - 1, i);
+        for (j = ncols; j < ncols + c_scale; j++)
+            scale1XY(target, j, i) = scale1XY(target, ncols + ncols - j - 1, i);
     }
-    for(i = nrows; i < nrows+c_scale; i++)
-    {
-        for(j = -c_scale; j < 0; j++)
-            reflectXY(target, j, i) = reflectXY(target, -j-1, nrows+nrows-i-1);
-        for(j = 0; j < ncols; j++)
-            reflectXY(target, j, i) = reflectXY(target, j, nrows+nrows-i-1);
-        for(j = ncols; j < ncols+c_scale; j++)
-            reflectXY(target, j, i) = reflectXY(target, ncols+ncols-j-1, nrows+nrows-i-1);
+    for (i = nrows; i < nrows + c_scale; i++) {
+        for (j = -c_scale; j < 0; j++)
+            scale1XY(target, j, i) = scale1XY(target, -j - 1, nrows + nrows - i - 1);
+        for (j = 0; j < ncols; j++)
+            scale1XY(target, j, i) = scale1XY(target, j, nrows + nrows - i - 1);
+        for (j = ncols; j < ncols + c_scale; j++)
+            scale1XY(target, j, i) = scale1XY(target, ncols + ncols - j - 1, nrows + nrows - i - 1);
     }
 }
 
@@ -159,6 +158,41 @@ CImg<unsigned char> Canny::getSmoothImage() {
     return smooth_img;
 }
 
+/*Returns the gradient and direction matrix*/
+pair<CImg<float>, CImg<float>> Canny::sobel() {
+    /* ALLOCATING MEM */
+    int ncols = origin.width(), nrows = origin.height(), scale = c_scale;
+    CImg<float> gradient(ncols + 2, nrows + 2),
+            dir(ncols, nrows);
+
+
+    reflect(gauss_smooth, nrows, ncols, 2 * c_scale);
+
+    for (int i = 0; i < ncols; i++) {
+        for (int j = 0; j < nrows; j++) {
+            //Sobel
+            float x[3][3] = {{-1, 0, 1},
+                             {-2, 0, 2},
+                             {-1, 0, 1}};
+            float y[3][3] = {{-1, -2, -1},
+                             {0,  0,  0},
+                             {1,  2,  1}};
+            float gx = 0, gy = 0;
+            for (int r = 0; r < 3; r++) {
+                for (int c = 0; c < 3; c++) {
+                    gx += x[r][c] * scale2XY(gauss_smooth, i - 1 + c, j - 1 + r);
+                    gy += y[r][c] * scale2XY(gauss_smooth, i - 1 + c, j - 1 + r);
+                }
+            }
+            p1XY(gradient, i, j) = sqrt(gy * gy + gx * gx);
+            dir(i, j) = atan(gy / gx) * (180 / M_PI);
+        }
+    }
+    reflect(gradient, nrows, ncols, 1);
+
+    return make_pair(gradient, dir);
+}
+
 
 /* EDGE DETECTION BY CANNY OPERATOR */
 
@@ -168,35 +202,28 @@ CImg<unsigned char> Canny::runCanny() {
 
     /* STEP: 1 --- GAUSSIAN SMOOTHING (Already done in constructor) */
 
-    /* ALLOCATING MEM */
-    int ncols = origin.width(), nrows = origin.height(), scale = c_scale;
-    CImg<float> gradient(ncols+2, nrows+2),
-                dir(ncols, nrows);
-
-
-    reflect(gauss_smooth, nrows, ncols, 2 * c_scale);
-
-    for (int i = 0; i < ncols; i++) {
-        for (int j = 0; j < nrows; j++) {
-            //Sobel
-            float gx = -cannyXY(gauss_smooth, i-1, j-1) - 2 * cannyXY(gauss_smooth, i-1, j) -
-                    cannyXY(gauss_smooth, i-1, j+1) + cannyXY(gauss_smooth, i+1, j-1) + 2 * cannyXY(gauss_smooth, i+1, j) +
-                    cannyXY(gauss_smooth, i+1, j+1);
-            float gy = -cannyXY(gauss_smooth, i-1, j-1) - 2 * cannyXY(gauss_smooth, i, j-1) -
-                       cannyXY(gauss_smooth, i+1, j-1) + cannyXY(gauss_smooth, i-1, j+1) + 2 * cannyXY(gauss_smooth, i, j+1) +
-                       cannyXY(gauss_smooth, i+1, j+1);
-            nmsXY(gradient,i,j) = sqrt(gy * gy + gx * gx);
-            dir(i, j) = atan(gy / gx) * (180 / M_PI);
-        }
-    }
-    reflect(gradient, nrows, ncols, 1);
+    //Sobel
+    auto pair = sobel();
 
     /*Non-Maximum Suppression */
-    auto edges = nms(gradient, dir);
-    hysThres(edges, 0);
-    cimg_forXY(edges, x, y) {
-        if (edges(x, y) != 255) edges(x, y) = 0;
+    CImg<unsigned char> edges;
+    if (!c_skipNMS) {
+        edges = nms(pair.first, pair.second);
+    } else {
+        edges = CImg<unsigned char>(origin.width(), origin.height());
+        cimg_forXY(edges, x, y) {
+            edges(x, y) = (unsigned char) p1XY(pair.first, x, y);
+        }
     }
+
+    hysThres(edges, 0);
+    printf("The lower threshold used = %d \n", min(c_thresh1, c_thresh2));
+    printf("The Upper threshold used = %d \n", max(c_thresh1, c_thresh2));
+    printf("==========================================\n");
+    cimg_forXY(edges, x, y) {
+            if (edges(x, y) != 255) edges(x, y) = 0;
+        }
+
     return edges;
 }
 
@@ -213,32 +240,32 @@ CImg<unsigned char> Canny::nms(CImg<float> &gradient, CImg<float> &dir) {
     printf(" Performing Non_maximum-Supression\n");
 
     cimg_forXY(origin, x, y) {
-        float direction = dir(x, y);
-        float val = 0, neg1 = 0, pos1 = 0, neg2, pos2;
-        if (direction >= -90 && direction <= -45) {
-            neg1 = nmsXY(gradient, x-1, y);
-            pos1 = nmsXY(gradient, x-1, y+1);
-            neg2 = nmsXY(gradient, x+1, y);
-            pos2 = nmsXY(gradient, x+1, y+1);
-        } else if (direction > -45 && direction <= 45) {
-            neg1 = nmsXY(gradient, x, y-1);
-            pos1 = nmsXY(gradient, x+1, y-1);
-            neg2 = nmsXY(gradient, x, y+1);
-            pos2 = nmsXY(gradient, x+1, y+1);
-        }  else {
-            neg1 = nmsXY(gradient, x-1, y);
-            pos1 = nmsXY(gradient, x-1, y-1);
-            neg2 = nmsXY(gradient, x+1, y);
-            pos2 = nmsXY(gradient, x+1, y-1);
+            float direction = dir(x, y);
+            float pt1, pt2;
+            if (direction >= -90 && direction <= -67.5) {
+                pt1 = p1XY(gradient, x, y-1);
+                pt2 = p1XY(gradient, x, y+1);
+            } else if (direction > -67.5 && direction <= -22.5) {
+                pt1 = p1XY(gradient, x+1, y+1);
+                pt2 = p1XY(gradient, x-1, y-1);
+            } else if (direction > -22.5 && direction <= 22.5){
+                pt1 = p1XY(gradient, x+1, y);
+                pt2 = p1XY(gradient, x-1, y);
+            } else if (direction > 22.5 && direction <= 67.5){
+                pt1 = p1XY(gradient, x+1, y-1);
+                pt2 = p1XY(gradient, x-1, y+1);
+            } else {
+                pt1 = p1XY(gradient, x, y-1);
+                pt2 = p1XY(gradient, x, y+1);
+            }
+            if (p1XY(gradient, x, y) < abs(pt1) ||
+                p1XY(gradient, x, y) < abs(pt2)) {
+                edgeMap(x, y) = 0;
+            } else {
+                edgepoints++;
+                edgeMap(x, y) = (unsigned char)p1XY(gradient, x, y);
+            }
         }
-        if (nmsXY(gradient, x, y) < pos1+(neg1-pos1)*tan(direction * M_PI / 180.0 ) ||
-            nmsXY(gradient, x, y) < pos2+(neg2-pos2)*tan(direction * M_PI / 180.0 )) {
-            edgeMap(x, y) = 0;
-        } else {
-            edgepoints++;
-            edgeMap(x, y) = nmsXY(gradient, x, y);
-        }
-    }
     printf(" Number of Edgepoints after nms is %d \n", edgepoints);
 
     return edgeMap;
@@ -250,38 +277,145 @@ CImg<unsigned char> Canny::nms(CImg<float> &gradient, CImg<float> &dir) {
 void Canny::hysThres(CImg<unsigned char> &edgeMap, int count) {
     bool changed = false;
     int thresh1 = min(c_thresh2, c_thresh1),
-        thresh2 = max(c_thresh2, c_thresh1);
+            thresh2 = max(c_thresh2, c_thresh1);
 
     printf("Run %d\n", count);
 
     cimg_forXY(edgeMap, x, y) {
-        if (edgeMap(x, y) == 255) continue;
-        if (edgeMap(x, y) >= thresh2) {
-            changed = true;
-            edgeMap(x, y) = 255;
-        } else if (edgeMap(x, y) <= thresh1) {
-            edgeMap(x, y) = 0;
-        } else {
-            for (int i = x - 1; i <= x + 1; i++) {
-                for (int j = y - 1; j <= y + 1; j++) {
-                    if (i < 0 || i == edgeMap.width() || j < 0 || j == edgeMap.height())
-                        continue;
-                    if (edgeMap(i, j) == 255) {
-                        changed = true;
-                        edgeMap(x, y) = 255;
-                        break;
+            if (edgeMap(x, y) == 255) continue;
+            if (edgeMap(x, y) >= thresh2) {
+                changed = true;
+                edgeMap(x, y) = 255;
+            } else if (edgeMap(x, y) <= thresh1) {
+                edgeMap(x, y) = 0;
+            } else {
+                // For those in between, connect them if there is a valid pixel in at least
+                // one of their eight neighbors
+                for (int i = x - 1; i <= x + 1; i++) {
+                    for (int j = y - 1; j <= y + 1; j++) {
+                        if (i < 0 || i == edgeMap.width() || j < 0 || j == edgeMap.height())
+                            continue;
+                        if (edgeMap(i, j) == 255) {
+                            changed = true;
+                            edgeMap(x, y) = 255;
+                            break;
+                        }
                     }
                 }
             }
         }
-    }
 
     if (changed) {
         hysThres(edgeMap, count + 1);
     }
+}
 
-    printf("The lower threshold used = %d \n",thresh1);
-    printf("The Upper threshold used = %d \n",thresh2);
-    printf("==========================================\n");
+/* Connect all neighboring edges in input */
+/* returns the matrix after processing */
+CImg<unsigned char> Canny::connectEdges(CImg<unsigned char> &input) {
+    int  nrows = input.height(), ncols = input.width();
+    CImg<unsigned char> res(ncols, nrows);
+    res.fill(0);
+    for (int x = 0; x < ncols; x++) {
+        for (int y = 0; y < nrows; y++) {
+            if (input(x, y) == 255) {
+                res(x, y) = 255;
+                continue;
+            }
+            int const dirs[8][2] = {{0, -1}, {1, -1}, {1, 0}, {1, 1},
+                                    {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}};
+            bool neighbors[3][3] = {{0, 0, 0},
+                                    {0, 0, 0},
+                                    {0, 0, 0}};
+            bool marked[3][3] = {{0, 0, 0},
+                                 {0, 0, 0},
+                                 {0, 0, 0}};
+            int neighbor_count = 0;
+            for (int i = 0; i < 8; i++) {
+                int temp_x = x + dirs[i][0], temp_y = y + dirs[i][1];
+                if (temp_x < 0 || temp_x == ncols || temp_y < 0 || temp_y == nrows || input(temp_x, temp_y) != 255) continue;
+                neighbors[temp_y + 1][temp_x + 1] = true;
+            }
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (neighbors[i][j] == 0) continue;
+                    bool flag = true;
+                    for (int k = 0; k < 8; k++) {
+                        int new_i = i + dirs[k][1], new_j = j + dirs[k][0];
+                        if (new_i < 0 || new_i == 3 || new_j < 0 || new_j == 3) continue;
+                        if (marked[new_i][new_j]) {
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (flag) neighbor_count++;
+                    marked[i][j] = true;
+                }
+            }
+            if (neighbor_count >= 2)
+                res(x, y) = 255;
+        }
+    }
+    return res;
+}
+
+/*Delete all edges shorter than 20 */
+/* returns the matrix after processing */
+CImg<unsigned char> Canny::deleteShortEdges(CImg<unsigned char> &input) {
+    int  nrows = input.height(), ncols = input.width();
+    const int dirs[][2] = {{0, -1}, {1, -1}, {1, 0}, {1, 1},
+                           {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}};
+    set<int> found_edges;
+    bool found;
+    CImg<unsigned char> res(ncols, nrows, 1, 1, 0);
+
+    do {
+        found = false;
+        int found_x, found_y, dir_index = 2;
+        for (int y = 0; y < nrows; y++) {
+            for (int x = 0; x < ncols; x++) {
+                if (input(x, y) == 255 && found_edges.count(x + y * ncols) == 0) {
+                    found_x = x;
+                    found_y = y;
+                    found = true;
+                    found_edges.insert(x + y * ncols);
+                    break;
+                }
+            }
+            if (found) break;
+        }
+        if (!found) break;
+        vector<pair<int, int>> current_edges;
+        queue<pair<int, int>> unvisited;
+        int length = 0;
+        unvisited.emplace(found_x, found_y);
+        while (!unvisited.empty()) {
+            auto curr = unvisited.front();
+            unvisited.pop();
+            current_edges.push_back(curr);
+            ++length;
+            for (int i = 0; i < 8; i++, dir_index = (dir_index + 1) % 8) {
+                int new_x = curr.first + dirs[dir_index][0];
+                int new_y = curr.second + dirs[dir_index][1];
+                if (new_x < 0 || new_x == ncols || new_y < 0 || new_y == nrows) continue;
+                if (input(new_x, new_y) == 255 && found_edges.count(new_x + new_y * ncols) == 0) {
+                    found_edges.insert(new_x + new_y * ncols);
+                    unvisited.emplace(new_x, new_y);
+                }
+            }
+        }
+        if (length >= 20) {
+            for (const auto &point : current_edges) {
+                res(point.first, point.second) = 255;
+            }
+        }
+    } while (found);
+
+    return res;
+}
+
+CImg<unsigned char> Canny::connectAndDelete(CImg<unsigned char> & input) {
+    auto conn = connectEdges(input);
+    return deleteShortEdges(conn);
 }
 

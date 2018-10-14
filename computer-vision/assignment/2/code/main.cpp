@@ -1,3 +1,4 @@
+#include <thread>
 #include "canny.h"
 
 
@@ -20,6 +21,7 @@ Canny process_args(int argc, char** argv) {
         case 's':
             skipNMS = true;
             printf("skipNMS\n");
+            break;
 
         case 't':
             printf("Setting threshold \n");
@@ -86,7 +88,20 @@ int main(int argc, char** argv) {
     
     Canny c = process_args(argc, argv);
     c.getSmoothImage().save("smoothed_image.bmp");
+    c.sobel().first.save("sobel.bmp");
     auto edges = c.runCanny();
     edges.save("ecanny_map.bmp");
-    edges.display();
+//    thread disp_can([&](){
+//        edges.display("Canny edges");
+//    });
+
+    auto addition = Canny::connectAndDelete(edges);
+
+//    thread disp_add([&](){
+//        addition.display("Addition");
+//    });
+
+    addition.save("linesDeleted.bmp");
+//    disp_can.join();
+//    disp_add.join();
 }

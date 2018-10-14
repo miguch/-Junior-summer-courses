@@ -2,7 +2,7 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
     <generated>
-      <config projectName="code" targetName="code" />
+      <config projectName="canny" targetName="code" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -13,6 +13,7 @@
   <component name="ChangeListManager">
     <list default="true" id="59a67d4a-4067-4009-8e8c-d123ffc62f41" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
+    <ignored path="$PROJECT_DIR$/CMakeFiles/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,29 +27,27 @@
       <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="43" />
+            <state relative-caret-position="40">
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Makefile" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Makefile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2902" />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="canny.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/canny.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1583">
-              <caret line="193" column="32" selection-start-line="193" selection-start-column="32" selection-end-line="193" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="canny.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/canny.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="21" column="57" selection-start-line="21" selection-start-column="57" selection-end-line="21" selection-end-column="57" />
+            <state relative-caret-position="430">
+              <caret line="335" selection-start-line="335" selection-end-line="335" />
               <folding>
-                <element signature="e#0#19#0" expanded="true" />
-                <element signature="e#676#685#0" expanded="true" />
+                <element signature="e#0#18#0" expanded="true" />
+                <element signature="e#4317#4326#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -57,8 +56,21 @@
       <file leaf-file-name="CImg.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CImg.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="51374" column="19" selection-start-line="51374" selection-start-column="19" selection-end-line="51374" selection-end-column="19" />
+            <state relative-caret-position="759">
+              <caret line="8546" selection-start-line="8546" selection-end-line="8546" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="canny.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/canny.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="231">
+              <caret line="35" column="65" selection-start-line="35" selection-start-column="65" selection-end-line="35" selection-end-column="65" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#676#685#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -66,8 +78,11 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1531">
-              <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
+            <state relative-caret-position="270">
+              <caret line="104" selection-start-line="104" selection-start-column="2" selection-end-line="105" selection-end-column="22" />
+              <folding>
+                <element signature="e#0#17#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -81,9 +96,13 @@
       <find>cannyXy</find>
       <find>operator()</find>
       <find>CImg&lt;T&gt;(</find>
+      <find>d</find>
+      <find>nmsXY</find>
+      <find>res</find>
     </findStrings>
     <replaceStrings>
       <replace>cannyXY</replace>
+      <replace>p1XY</replace>
     </replaceStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -123,8 +142,13 @@
         <subPane>
           <expand>
             <path>
-              <item name="code" type="b2602c69:ProjectViewProjectNode" />
+              <item name="canny" type="b2602c69:ProjectViewProjectNode" />
               <item name="code" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="canny" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="462c0819:PsiDirectoryNode" />
+              <item name="cmake-build-debug" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -151,8 +175,8 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.code">
-    <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="code" RUN_TARGET_NAME="code" EXPLICIT_BUILD_TARGET_NAME="all" />
-    <configuration name="code" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-t 20 40 $PROJECT_DIR$/twows.bmp" PASS_PARENT_ENVS_2="true" PROJECT_NAME="code" TARGET_NAME="code" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="code" RUN_TARGET_NAME="code" />
+    <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="canny" RUN_TARGET_NAME="code" EXPLICIT_BUILD_TARGET_NAME="all" />
+    <configuration name="code" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-t 20 40 $PROJECT_DIR$/lena.bmp" PASS_PARENT_ENVS_2="true" PROJECT_NAME="canny" TARGET_NAME="code" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="canny" RUN_TARGET_NAME="code" />
     <list>
       <item itemvalue="Application.Build All" />
       <item itemvalue="Application.code" />
@@ -170,36 +194,35 @@
       <updated>1539417972043</updated>
       <workItem from="1539417976931" duration="337000" />
       <workItem from="1539418335154" duration="13000" />
-      <workItem from="1539418376934" duration="23748000" />
+      <workItem from="1539418376934" duration="47515000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24098000" />
+    <option name="totallyTimeSpent" value="47865000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="4" y="26" width="1423" height="789" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25298664" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TODO" order="7" />
       <window_info anchor="right" id="Cargo" order="3" />
-      <window_info anchor="bottom" id="Messages" weight="0.33146852" />
-      <window_info anchor="bottom" id="CMake" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33006993" />
+      <window_info anchor="bottom" id="Messages" order="0" weight="0.33146852" />
+      <window_info anchor="bottom" id="CMake" order="11" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="3" weight="0.33006993" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3986014" />
+      <window_info active="true" anchor="bottom" id="Debug" order="4" visible="true" weight="0.3986014" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="2" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -213,23 +236,30 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/canny.cpp</url>
-          <line>194</line>
-          <option name="timeStamp" value="9" />
+          <line>386</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/canny.cpp</url>
+          <line>355</line>
+          <option name="timeStamp" value="28" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="13" />
+      <option name="time" value="36" />
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="CMakeRunConfiguration">
-        <watch expression="nmsXY(gradient, x, y)" language="ObjectiveC" />
-        <watch expression="pos1+(neg1-pos1)*tan(direction)" language="ObjectiveC" />
-        <watch expression="pos1+(neg1-pos1)" language="ObjectiveC" />
-        <watch expression="direction * M_PI / 180.0 " language="ObjectiveC" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>x == 24 &amp;&amp; y == 15</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>input(x, y) == 255</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>x == 373 &amp;&amp; y == 94</expression-string>
         <language-id>ObjectiveC</language-id>
@@ -238,42 +268,52 @@
     </expressions>
     <expressions id="watch">
       <expression>
-        <expression-string>direction * M_PI / 180.0</expression-string>
+        <expression-string>input(21,66)</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>pos1+(neg1-pos1)</expression-string>
+        <expression-string>input[21][66]</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>pos1+(neg1-pos1)*tan(direction)</expression-string>
+        <expression-string>res.width()</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>nmsXY(gradient, x, y)</expression-string>
+        <expression-string>input.display(0,1,0,0)</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>dd_image.display(0,true,0,false)</expression-string>
+        <expression-string>input.display()</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>dd_image.display()</expression-string>
+        <expression-string>input.display(&quot;123&quot;)</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>origin.width() + 2 * c_scale</expression-string>
+        <expression-string>width()</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>origin.height() + 2 * c_scale</expression-string>
+        <expression-string>height()</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>_height</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>res.height()</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -287,6 +327,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
           <caret line="21" column="18" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#4317#4326#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -302,7 +346,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CImg.h">
       <provider selected="true" editor-type-id="text-editor">
@@ -345,13 +395,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/math.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="146">
@@ -359,17 +402,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
+    <entry file="file://$PROJECT_DIR$/Makefile">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1531">
-          <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
+        <state relative-caret-position="-2902" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/canny.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="21" column="57" selection-start-line="21" selection-start-column="57" selection-end-line="21" selection-end-column="57" />
+        <state relative-caret-position="231">
+          <caret line="35" column="65" selection-start-line="35" selection-start-column="65" selection-end-line="35" selection-end-column="65" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
             <element signature="e#676#685#0" expanded="true" />
@@ -379,15 +427,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CImg.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="51374" column="19" selection-start-line="51374" selection-start-column="19" selection-end-line="51374" selection-end-column="19" />
+        <state relative-caret-position="759">
+          <caret line="8546" selection-start-line="8546" selection-end-line="8546" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="104" selection-start-line="104" selection-start-column="2" selection-end-line="105" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/canny.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1583">
-          <caret line="193" column="32" selection-start-line="193" selection-start-column="32" selection-end-line="193" selection-end-column="32" />
+        <state relative-caret-position="430">
+          <caret line="335" selection-start-line="335" selection-end-line="335" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#4317#4326#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

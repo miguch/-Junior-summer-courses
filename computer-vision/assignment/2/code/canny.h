@@ -20,7 +20,8 @@ private:
     void gaussSmoothing(float sigma, int scale);
     CImg<unsigned char> nms(CImg<float>& gradient, CImg<float> &dir);
     void hysThres(CImg<unsigned char>& edgeMap, int count);
-    
+
+
 public:
     Canny(string filename, bool skipNMS, int thresh1, int thresh2, int scale, float sigma);
 
@@ -29,5 +30,11 @@ public:
     CImg<unsigned char> getSmoothImage();
 
     CImg<unsigned char> runCanny();
+
+    pair<CImg<float>, CImg<float>> sobel();
+
+    static CImg<unsigned char> connectEdges(CImg<unsigned char> & input);
+    static CImg<unsigned char> deleteShortEdges(CImg<unsigned char> & input);
+    static CImg<unsigned char> connectAndDelete(CImg<unsigned char> & input);
     
 };
