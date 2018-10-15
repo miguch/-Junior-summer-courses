@@ -7,3 +7,5 @@ smoothed_image.bmp
 linesDeleted.bmp
 sobel.bmp
 
+cmake-build-debug
+.idea

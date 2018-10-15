@@ -3,6 +3,11 @@
 #include <vector>
 #include <queue>
 #include <set>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846264338327950288
+#endif
+
 /*Image starts from (-scale, -scale) */
 #define scale1XY(img, x, y) img(x + c_scale, y + c_scale)
 /*Image starts from (-2*scale, -2*scale) */
@@ -212,8 +217,8 @@ CImg<unsigned char> Canny::runCanny() {
     } else {
         edges = CImg<unsigned char>(origin.width(), origin.height());
         cimg_forXY(edges, x, y) {
-            edges(x, y) = (unsigned char) p1XY(pair.first, x, y);
-        }
+                edges(x, y) = (unsigned char) p1XY(pair.first, x, y);
+            }
     }
 
     hysThres(edges, 0);
@@ -243,27 +248,27 @@ CImg<unsigned char> Canny::nms(CImg<float> &gradient, CImg<float> &dir) {
             float direction = dir(x, y);
             float pt1, pt2;
             if (direction >= -90 && direction <= -67.5) {
-                pt1 = p1XY(gradient, x, y-1);
-                pt2 = p1XY(gradient, x, y+1);
+                pt1 = p1XY(gradient, x, y - 1);
+                pt2 = p1XY(gradient, x, y + 1);
             } else if (direction > -67.5 && direction <= -22.5) {
-                pt1 = p1XY(gradient, x+1, y+1);
-                pt2 = p1XY(gradient, x-1, y-1);
-            } else if (direction > -22.5 && direction <= 22.5){
-                pt1 = p1XY(gradient, x+1, y);
-                pt2 = p1XY(gradient, x-1, y);
-            } else if (direction > 22.5 && direction <= 67.5){
-                pt1 = p1XY(gradient, x+1, y-1);
-                pt2 = p1XY(gradient, x-1, y+1);
+                pt1 = p1XY(gradient, x + 1, y + 1);
+                pt2 = p1XY(gradient, x - 1, y - 1);
+            } else if (direction > -22.5 && direction <= 22.5) {
+                pt1 = p1XY(gradient, x + 1, y);
+                pt2 = p1XY(gradient, x - 1, y);
+            } else if (direction > 22.5 && direction <= 67.5) {
+                pt1 = p1XY(gradient, x + 1, y - 1);
+                pt2 = p1XY(gradient, x - 1, y + 1);
             } else {
-                pt1 = p1XY(gradient, x, y-1);
-                pt2 = p1XY(gradient, x, y+1);
+                pt1 = p1XY(gradient, x, y - 1);
+                pt2 = p1XY(gradient, x, y + 1);
             }
             if (p1XY(gradient, x, y) < abs(pt1) ||
                 p1XY(gradient, x, y) < abs(pt2)) {
                 edgeMap(x, y) = 0;
             } else {
                 edgepoints++;
-                edgeMap(x, y) = (unsigned char)p1XY(gradient, x, y);
+                edgeMap(x, y) = (unsigned char) p1XY(gradient, x, y);
             }
         }
     printf(" Number of Edgepoints after nms is %d \n", edgepoints);
@@ -313,10 +318,16 @@ void Canny::hysThres(CImg<unsigned char> &edgeMap, int count) {
 /* Connect all neighboring edges in input */
 /* returns the matrix after processing */
 CImg<unsigned char> Canny::connectEdges(CImg<unsigned char> &input) {
-    int  nrows = input.height(), ncols = input.width();
+    int nrows = input.height(), ncols = input.width();
     CImg<unsigned char> res(ncols, nrows, 1, 1, 0);
-    int const dirs[8][2] = {{0, -1}, {1, -1}, {1, 0}, {1, 1},
-                            {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}};
+    int const dirs[8][2] = {{0,  -1},
+                            {1,  -1},
+                            {1,  0},
+                            {1,  1},
+                            {0,  1},
+                            {-1, 1},
+                            {-1, 0},
+                            {-1, -1}};
     for (int x = 0; x < ncols; x++) {
         for (int y = 0; y < nrows; y++) {
             if (input(x, y) == 255) {
@@ -341,6 +352,8 @@ CImg<unsigned char> Canny::connectEdges(CImg<unsigned char> &input) {
                 }
             }
 
+            //Check whether the current point has two unconnected neighbors
+            //If yes, connect this point.
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     if (neighbors[i][j] == 0) continue;
@@ -367,9 +380,15 @@ CImg<unsigned char> Canny::connectEdges(CImg<unsigned char> &input) {
 /*Delete all edges shorter than 20 */
 /* returns the matrix after processing */
 CImg<unsigned char> Canny::deleteShortEdges(CImg<unsigned char> &input) {
-    int  nrows = input.height(), ncols = input.width();
-    const int dirs[][2] = {{0, -1}, {1, -1}, {1, 0}, {1, 1},
-                           {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}};
+    int nrows = input.height(), ncols = input.width();
+    const int dirs[][2] = {{0,  -1},
+                           {1,  -1},
+                           {1,  0},
+                           {1,  1},
+                           {0,  1},
+                           {-1, 1},
+                           {-1, 0},
+                           {-1, -1}};
     unordered_set<int> found_edges;
     bool found;
     CImg<unsigned char> res(ncols, nrows, 1, 1, 0);
@@ -419,7 +438,7 @@ CImg<unsigned char> Canny::deleteShortEdges(CImg<unsigned char> &input) {
     return res;
 }
 
-CImg<unsigned char> Canny::connectAndDelete(CImg<unsigned char> & input) {
+CImg<unsigned char> Canny::connectAndDelete(CImg<unsigned char> &input) {
     auto conn = connectEdges(input);
     return deleteShortEdges(conn);
 }
