@@ -13,7 +13,7 @@ Canny process_args(int argc, char **argv) {
     int thresh = INT_MAX, thresh2, scale;
     float sigma;
     char err[100];
-    snprintf(err, 100, "Usage:%s [-skipNMS] -t thresh_low thresh_high img ", argv[0]);
+    snprintf(err, 100, "Usage:%s [-skipNMS] -t thresh_low thresh_high filename", argv[0]);
     while (--argc > 0 && **(argv + 1) == '-') {
         switch ((*++argv)[1]) {
 
@@ -25,9 +25,11 @@ Canny process_args(int argc, char **argv) {
             case 't':
                 printf("Setting threshold \n");
                 printf(" %s is the threshold\n", *++argv);
+                argc--;
                 str = *(argv);
                 thresh = atoi(str);
                 str = *(++argv);
+                argc--;
                 printf(" The str is %s\n", str);
 
                 if (str[0] <= '9' && str[0] >= '0') {
@@ -58,6 +60,7 @@ Canny process_args(int argc, char **argv) {
     }
 
     if (thresh == INT_MAX) {
+        cerr << err << endl;
         error("Thresh not set.");
     }
 
@@ -73,9 +76,18 @@ Canny process_args(int argc, char **argv) {
     string filename;
     printf(" Making decesion\n");
     if (histh) {
+        if (argc == 0) {
+            cerr << "File not set!" << endl;
+            error(err);
+        }
         filename = *(++argv);
     } else {
         filename = str;
+    }
+
+    if (filename == "") {
+        cerr << "File not set!" << endl;
+        error(err);
     }
 
     return Canny(filename, skipNMS, thresh, thresh2, scale, sigma);
