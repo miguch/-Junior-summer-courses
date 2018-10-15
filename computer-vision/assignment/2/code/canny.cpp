@@ -314,16 +314,16 @@ void Canny::hysThres(CImg<unsigned char> &edgeMap, int count) {
 /* returns the matrix after processing */
 CImg<unsigned char> Canny::connectEdges(CImg<unsigned char> &input) {
     int  nrows = input.height(), ncols = input.width();
-    CImg<unsigned char> res(ncols, nrows);
-    res.fill(0);
+    CImg<unsigned char> res(ncols, nrows, 1, 1, 0);
+    int const dirs[8][2] = {{0, -1}, {1, -1}, {1, 0}, {1, 1},
+                            {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}};
     for (int x = 0; x < ncols; x++) {
         for (int y = 0; y < nrows; y++) {
             if (input(x, y) == 255) {
                 res(x, y) = 255;
                 continue;
             }
-            int const dirs[8][2] = {{0, -1}, {1, -1}, {1, 0}, {1, 1},
-                                    {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}};
+
             bool neighbors[3][3] = {{0, 0, 0},
                                     {0, 0, 0},
                                     {0, 0, 0}};
@@ -331,11 +331,16 @@ CImg<unsigned char> Canny::connectEdges(CImg<unsigned char> &input) {
                                  {0, 0, 0},
                                  {0, 0, 0}};
             int neighbor_count = 0;
+
             for (int i = 0; i < 8; i++) {
-                int temp_x = x + dirs[i][0], temp_y = y + dirs[i][1];
-                if (temp_x < 0 || temp_x == ncols || temp_y < 0 || temp_y == nrows || input(temp_x, temp_y) != 255) continue;
-                neighbors[temp_y + 1][temp_x + 1] = true;
+                int new_x = x + dirs[i][0], new_y = y + dirs[i][1];
+                if (new_x < 0 || new_x == ncols || new_y < 0 || new_y == ncols)
+                    continue;
+                if (input(new_x, new_y) == 255) {
+                    neighbors[dirs[i][1] + 1][dirs[i][0] + 1] = true;
+                }
             }
+
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     if (neighbors[i][j] == 0) continue;
@@ -365,7 +370,7 @@ CImg<unsigned char> Canny::deleteShortEdges(CImg<unsigned char> &input) {
     int  nrows = input.height(), ncols = input.width();
     const int dirs[][2] = {{0, -1}, {1, -1}, {1, 0}, {1, 1},
                            {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}};
-    set<int> found_edges;
+    unordered_set<int> found_edges;
     bool found;
     CImg<unsigned char> res(ncols, nrows, 1, 1, 0);
 

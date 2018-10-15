@@ -91,17 +91,18 @@ int main(int argc, char** argv) {
     c.sobel().first.save("sobel.bmp");
     auto edges = c.runCanny();
     edges.save("ecanny_map.bmp");
-//    thread disp_can([&](){
-//        edges.display("Canny edges");
-//    });
+    thread disp_can([&](){
+        edges.display("Canny edges");
+    });
 
     auto addition = Canny::connectAndDelete(edges);
 
-//    thread disp_add([&](){
-//        addition.display("Addition");
-//    });
+    thread disp_add([&](){
+        addition.display("Addition");
+    });
 
     addition.save("linesDeleted.bmp");
-//    disp_can.join();
-//    disp_add.join();
+
+    disp_can.join();
+    disp_add.join();
 }

@@ -43,8 +43,8 @@
       <file leaf-file-name="canny.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/canny.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="430">
-              <caret line="335" selection-start-line="335" selection-end-line="335" />
+            <state relative-caret-position="-326">
+              <caret line="378" column="22" selection-start-line="378" selection-start-column="22" selection-end-line="378" selection-end-column="22" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
                 <element signature="e#4317#4326#0" expanded="true" />
@@ -56,7 +56,7 @@
       <file leaf-file-name="CImg.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CImg.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="759">
+            <state relative-caret-position="-1115">
               <caret line="8546" selection-start-line="8546" selection-end-line="8546" />
             </state>
           </provider>
@@ -78,8 +78,8 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="104" selection-start-line="104" selection-start-column="2" selection-end-line="105" selection-end-column="22" />
+            <state relative-caret-position="71">
+              <caret line="94" column="37" selection-start-line="94" selection-start-column="37" selection-end-line="94" selection-end-column="37" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -99,6 +99,7 @@
       <find>d</find>
       <find>nmsXY</find>
       <find>res</find>
+      <find>M_PI</find>
     </findStrings>
     <replaceStrings>
       <replace>cannyXY</replace>
@@ -194,15 +195,16 @@
       <updated>1539417972043</updated>
       <workItem from="1539417976931" duration="337000" />
       <workItem from="1539418335154" duration="13000" />
-      <workItem from="1539418376934" duration="47515000" />
+      <workItem from="1539418376934" duration="50361000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47865000" />
+    <option name="totallyTimeSpent" value="50711000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="4" y="26" width="1423" height="789" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25298664" />
       <window_info anchor="bottom" id="TODO" order="7" />
@@ -211,11 +213,11 @@
       <window_info anchor="bottom" id="CMake" order="11" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="3" weight="0.33006993" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.33006993" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Debug" order="4" visible="true" weight="0.3986014" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.3986014" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -236,12 +238,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/canny.cpp</url>
-          <line>386</line>
+          <line>391</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/canny.cpp</url>
-          <line>355</line>
+          <line>360</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
       </breakpoints>
@@ -267,6 +269,21 @@
       </expression>
     </expressions>
     <expressions id="watch">
+      <expression>
+        <expression-string>input(20,20)</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>temp_y</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>temp_x</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>input(21,66)</expression-string>
         <language-id>ObjectiveC</language-id>
@@ -299,21 +316,6 @@
       </expression>
       <expression>
         <expression-string>width()</expression-string>
-        <language-id>ObjectiveC</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>height()</expression-string>
-        <language-id>ObjectiveC</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>_height</expression-string>
-        <language-id>ObjectiveC</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>res.height()</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -414,6 +416,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include/math.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="691" column="12" selection-start-line="691" selection-start-column="8" selection-end-line="691" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/canny.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
@@ -425,27 +434,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CImg.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="759">
-          <caret line="8546" selection-start-line="8546" selection-end-line="8546" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="104" selection-start-line="104" selection-start-column="2" selection-end-line="105" selection-end-column="22" />
+        <state relative-caret-position="71">
+          <caret line="94" column="37" selection-start-line="94" selection-start-column="37" selection-end-line="94" selection-end-column="37" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/CImg.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1115">
+          <caret line="8546" selection-start-line="8546" selection-end-line="8546" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/canny.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="335" selection-start-line="335" selection-end-line="335" />
+        <state relative-caret-position="-326">
+          <caret line="378" column="22" selection-start-line="378" selection-start-column="22" selection-end-line="378" selection-end-column="22" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
             <element signature="e#4317#4326#0" expanded="true" />
