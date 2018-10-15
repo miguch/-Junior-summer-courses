@@ -251,14 +251,14 @@ CImg<unsigned char> Canny::nms(CImg<float> &gradient, CImg<float> &dir) {
                 pt1 = p1XY(gradient, x, y - 1);
                 pt2 = p1XY(gradient, x, y + 1);
             } else if (direction > -67.5 && direction <= -22.5) {
-                pt1 = p1XY(gradient, x + 1, y + 1);
-                pt2 = p1XY(gradient, x - 1, y - 1);
+                pt1 = p1XY(gradient, x + 1, y - 1);
+                pt2 = p1XY(gradient, x - 1, y + 1);
             } else if (direction > -22.5 && direction <= 22.5) {
                 pt1 = p1XY(gradient, x + 1, y);
                 pt2 = p1XY(gradient, x - 1, y);
             } else if (direction > 22.5 && direction <= 67.5) {
-                pt1 = p1XY(gradient, x + 1, y - 1);
-                pt2 = p1XY(gradient, x - 1, y + 1);
+                pt1 = p1XY(gradient, x + 1, y + 1);
+                pt2 = p1XY(gradient, x - 1, y - 1);
             } else {
                 pt1 = p1XY(gradient, x, y - 1);
                 pt2 = p1XY(gradient, x, y + 1);
