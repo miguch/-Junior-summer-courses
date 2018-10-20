@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "*.m": "matlab",
-        "__functional_03": "cpp",
-        "functional": "cpp",
-        "ios": "cpp"
-    }
-}
