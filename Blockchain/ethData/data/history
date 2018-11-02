@@ -1,0 +1,256 @@
+eth.accounts
+miner.setEtherbase(eth.accounts[0])
+miner.start()
+miner.stop
+miner.stop()
+admin.peers
+admin.addPeer("enode://4aec8c2f031bcbabcce0108edfaff0bc2d3f682df3131206521fffc6e8f7ab49c8ffce58d9c4ce86bb712e9e323f3ad80640edfd2400ede627b2c62d0800574c@192.168.89.101")
+admin.addPeer("enode://4aec8c2f031bcbabcce0108edfaff0bc2d3f682df3131206521fffc6e8f7ab49c8ffce58d9c4ce86bb712e9e323f3ad80640edfd2400ede627b2c62d0800574c@192.168.89.101:1234")
+admin.peers
+eth.accounts
+var sender = eth.accounts[0]
+var rev = "0x913ed1f0a0b2c2499886791f974f251cea58e66a"
+var amount = toWei(0.12, "ether")
+var amount = web3.toWei(0.12, "ether")
+eth.getBlock("pending", true)
+eth.sendTransaction({from: sender, to: rev, value: amount})
+eth.getBlock("pending", true)
+web3.fromWei(eth.getBalance(eth.accounts[0], "ether"))
+web3.fromWei(eth.getBalance(eth.accounts[0]), "ether")
+eth.getBlock(14)
+eth.getBlock(13)
+eth.getBlock(14)
+miner.start()
+eth.sendTransaction({from: sender, to:rev, value: web3.toWei(12, "ether")})
+eth.getBlock("pending")
+eth.getBlock("pending", true)
+web3.fromWei(eth.getBalance(eth.accounts[0]), "ether")
+miner.stop()
+eth.getBalance("0x913ed1f0a0b2c2499886791f974f251cea58e66a")
+eth.accounts
+eth.getBlock("pending")
+eth.getBlock("pending", true)
+eth.getBlock(24)
+eth.getBlock(23)
+eth.getBlock("pending")
+eth.getBlock(0)
+admin.peers
+miner.start()
+miner.stop()
+eth.getBlock(23)
+eth.getBlock(24)
+eth.getBlock(25)
+eth.getBlock(26)
+eth.getBlock(27)
+eth.getBlock(28)
+eth.getBlock(30)
+eth.getBlock(24)
+web3.getBlock
+eth.getBlock('latest')
+eth.getBlock(24)
+eth.getBlock(24, true)
+eth.getBlock(24)
+web3.eth.getBlock(24)
+eth.getBlock(24)
+eth.accounts
+eth.hashrate
+miner.start()
+eth.hashrate
+miner.stop()
+var buyContract = web3.eth.contract([{"constant":false,"inputs":[{"name":"seller","type":"address"}],"name":"buyGoods","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"initUser","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"seller","type":"address"}],"name":"getGoods","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}]);
+var buy = buyContract.new(
+   {
+     from: web3.eth.accounts[0], 
+     data: '0x6060604052341561000f57600080fd5b6104138061001e6000396000f300606060405260043610610057576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806305c91a5f1461005c578063c06bd7e11461010e578063cd8872d814610123575b600080fd5b341561006757600080fd5b610093600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610170565b6040518080602001828103825283818151815260200191508051906020019080838360005b838110156100d35780820151818401526020810190506100b8565b50505050905090810190601f1680156101005780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b341561011957600080fd5b610121610345565b005b341561012e57600080fd5b61015a600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190505061038b565b6040518082815260200191505060405180910390f35b6101786103d3565b6706f05b59d3b200003073ffffffffffffffffffffffffffffffffffffffff163110806101e3575060008060008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002054145b15610225576040805190810160405280600581526020017f4661696c2e0000000000000000000000000000000000000000000000000000008152509050610340565b8173ffffffffffffffffffffffffffffffffffffffff166108fc6706f05b59d3b200009081150290604051600060405180830381858888f19350505050151561026d57600080fd5b60016000808473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000828254039250508190555060016000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600082825401925050819055506040805190810160405280600881526020017f537563636565642e00000000000000000000000000000000000000000000000081525090505b919050565b60026000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002081905550565b60008060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020549050919050565b6020604051908101604052806000815250905600a165627a7a72305820393d53a8a5ed8167907ea8653ea5a76fae3ee1b1715dfe87f1c343f39e81def30029', 
+     gas: '4700000'
+   }, function (e, contract){
+    console.log(e, contract);
+    if (typeof contract.address !== 'undefined') {
+         console.log('Contract mined! address: ' + contract.address + ' transactionHash: ' + contract.transactionHash);
+    }
+ })
+eth.getBalance(eth.accounts[0])
+eth.getBalance(eth.accounts[1])
+var buyContract = web3.eth.contract([{"constant":false,"inputs":[{"name":"seller","type":"address"}],"name":"buyGoods","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"initUser","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"seller","type":"address"}],"name":"getGoods","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}]);
+var buy = buyContract.new(
+   {
+     from: web3.eth.accounts[0], 
+     data: '0x6060604052341561000f57600080fd5b6104138061001e6000396000f300606060405260043610610057576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806305c91a5f1461005c578063c06bd7e11461010e578063cd8872d814610123575b600080fd5b341561006757600080fd5b610093600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610170565b6040518080602001828103825283818151815260200191508051906020019080838360005b838110156100d35780820151818401526020810190506100b8565b50505050905090810190601f1680156101005780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b341561011957600080fd5b610121610345565b005b341561012e57600080fd5b61015a600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190505061038b565b6040518082815260200191505060405180910390f35b6101786103d3565b6706f05b59d3b200003073ffffffffffffffffffffffffffffffffffffffff163110806101e3575060008060008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002054145b15610225576040805190810160405280600581526020017f4661696c2e0000000000000000000000000000000000000000000000000000008152509050610340565b8173ffffffffffffffffffffffffffffffffffffffff166108fc6706f05b59d3b200009081150290604051600060405180830381858888f19350505050151561026d57600080fd5b60016000808473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000828254039250508190555060016000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600082825401925050819055506040805190810160405280600881526020017f537563636565642e00000000000000000000000000000000000000000000000081525090505b919050565b60026000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002081905550565b60008060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020549050919050565b6020604051908101604052806000815250905600a165627a7a72305820393d53a8a5ed8167907ea8653ea5a76fae3ee1b1715dfe87f1c343f39e81def30029', 
+     gas: '4700000'
+   }, function (e, contract){
+    console.log(e, contract);
+    if (typeof contract.address !== 'undefined') {
+         console.log('Contract mined! address: ' + contract.address + ' transactionHash: ' + contract.transactionHash);
+    }
+ })
+buy
+eth.getBalance(eth.accounts[0])
+buy.initUser()
+buy.initUser
+miner.start(1)
+buy
+eth.getBalance(eth.accounts[0])
+miner.stop()
+miner.start(3)
+buy.initUser()
+var buyContract = web3.eth.contract([{"constant":false,"inputs":[{"name":"seller","type":"address"}],"name":"buyGoods","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"}]);
+var buy = buyContract.new(
+   {
+     from: web3.eth.accounts[0], 
+     data: '0x6060604052341561000f57600080fd5b61022a8061001e6000396000f300606060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806305c91a5f14610046575b600080fd5b341561005157600080fd5b61007d600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506100f8565b6040518080602001828103825283818151815260200191508051906020019080838360005b838110156100bd5780820151818401526020810190506100a2565b50505050905090810190601f1680156100ea5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6101006101ea565b6706f05b59d3b200003073ffffffffffffffffffffffffffffffffffffffff16311015610164576040805190810160405280600581526020017f4661696c2e00000000000000000000000000000000000000000000000000000081525090506101e5565b8173ffffffffffffffffffffffffffffffffffffffff166108fc6706f05b59d3b200009081150290604051600060405180830381858888f1935050505015156101ac57600080fd5b6040805190810160405280600881526020017f537563636565642e00000000000000000000000000000000000000000000000081525090505b919050565b6020604051908101604052806000815250905600a165627a7a723058204b51b1cf67a08534cf6768ac3f4ce46d6f492640420a98b15f1a6d77b6e65e850029', 
+     gas: '4700000'
+   }, function (e, contract){
+    console.log(e, contract);
+    if (typeof contract.address !== 'undefined') {
+         console.log('Contract mined! address: ' + contract.address + ' transactionHash: ' + contract.transactionHash);
+    }
+ })
+var buyContract = web3.eth.contract([{"constant":false,"inputs":[{"name":"seller","type":"address"}],"name":"buyGoods","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"}]);
+var buy = buyContract.new(
+   {
+     from: web3.eth.accounts[0], 
+     data: '0x6060604052341561000f57600080fd5b61022a8061001e6000396000f300606060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806305c91a5f14610046575b600080fd5b341561005157600080fd5b61007d600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506100f8565b6040518080602001828103825283818151815260200191508051906020019080838360005b838110156100bd5780820151818401526020810190506100a2565b50505050905090810190601f1680156100ea5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6101006101ea565b6706f05b59d3b200003073ffffffffffffffffffffffffffffffffffffffff16311015610164576040805190810160405280600581526020017f4661696c2e00000000000000000000000000000000000000000000000000000081525090506101e5565b8173ffffffffffffffffffffffffffffffffffffffff166108fc6706f05b59d3b200009081150290604051600060405180830381858888f1935050505015156101ac57600080fd5b6040805190810160405280600881526020017f537563636565642e00000000000000000000000000000000000000000000000081525090505b919050565b6020604051908101604052806000815250905600a165627a7a723058204b51b1cf67a08534cf6768ac3f4ce46d6f492640420a98b15f1a6d77b6e65e850029', 
+     gas: '4700000'
+   }, function (e, contract){
+    console.log(e, contract);
+    if (typeof contract.address !== 'undefined') {
+         console.log('Contract mined! address: ' + contract.address + ' transactionHash: ' + contract.transactionHash);
+    }
+ })
+buy
+buy.buyGoods("0x913ed1f0a0b2c2499886791f974f251cea58e66a")
+var solContract = web3.eth.contract([{"constant":false,"inputs":[{"name":"seller","type":"address"}],"name":"buyGoods","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"}]);
+var sol = solContract.new(
+   {
+     from: web3.eth.accounts[0], 
+     data: '0x6060604052341561000f57600080fd5b61022a8061001e6000396000f300606060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806305c91a5f14610046575b600080fd5b341561005157600080fd5b61007d600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506100f8565b6040518080602001828103825283818151815260200191508051906020019080838360005b838110156100bd5780820151818401526020810190506100a2565b50505050905090810190601f1680156100ea5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6101006101ea565b6706f05b59d3b200003073ffffffffffffffffffffffffffffffffffffffff16311015610164576040805190810160405280600581526020017f4661696c2e00000000000000000000000000000000000000000000000000000081525090506101e5565b8173ffffffffffffffffffffffffffffffffffffffff166108fc6706f05b59d3b200009081150290604051600060405180830381858888f1935050505015156101ac57600080fd5b6040805190810160405280600881526020017f537563636565642e00000000000000000000000000000000000000000000000081525090505b919050565b6020604051908101604052806000815250905600a165627a7a72305820c115fa6737bf0da470af8d9e20f5d828fa8ea4fe8e5d0488d554ba4e6e8bb1e80029', 
+     gas: '4700000'
+   }, function (e, contract){
+    console.log(e, contract);
+    if (typeof contract.address !== 'undefined') {
+         console.log('Contract mined! address: ' + contract.address + ' transactionHash: ' + contract.transactionHash);
+    }
+ })
+var giveContract = web3.eth.contract([{"constant":false,"inputs":[{"name":"seller","type":"address"}],"name":"buyGoods","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"}]);
+var give = giveContract.new(
+   {
+     from: web3.eth.accounts[0], 
+     data: '0x6060604052341561000f57600080fd5b61022a8061001e6000396000f300606060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806305c91a5f14610046575b600080fd5b341561005157600080fd5b61007d600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506100f8565b6040518080602001828103825283818151815260200191508051906020019080838360005b838110156100bd5780820151818401526020810190506100a2565b50505050905090810190601f1680156100ea5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6101006101ea565b6706f05b59d3b200003073ffffffffffffffffffffffffffffffffffffffff16311015610164576040805190810160405280600581526020017f4661696c2e00000000000000000000000000000000000000000000000000000081525090506101e5565b8173ffffffffffffffffffffffffffffffffffffffff166108fc6706f05b59d3b200009081150290604051600060405180830381858888f1935050505015156101ac57600080fd5b6040805190810160405280600881526020017f537563636565642e00000000000000000000000000000000000000000000000081525090505b919050565b6020604051908101604052806000815250905600a165627a7a72305820866ec1a0566d74a1d75337df0093143460b3ba5bf7c95d6616a36b92da7682f10029', 
+     gas: '4700000'
+   }, function (e, contract){
+    console.log(e, contract);
+    if (typeof contract.address !== 'undefined') {
+         console.log('Contract mined! address: ' + contract.address + ' transactionHash: ' + contract.transactionHash);
+    }
+ })
+give
+give.buyGoods("0x913ed1f0a0b2c2499886791f974f251cea58e66a
+")
+give.buyGoods("0x913ed1f0a0b2c2499886791f974f251cea58e66a")
+eth.accounts
+give.buyGoods("0x28bae844822cb876368f425aee224febca50e0a5")
+eth.accounts
+var showContract = web3.eth.contract([{"constant":true,"inputs":[],"name":"showAddr","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"}]);
+var show = showContract.new(
+   {
+     from: web3.eth.accounts[0], 
+     data: '0x6060604052341561000f57600080fd5b60ca8061001d6000396000f300606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063a422bb1a146044575b600080fd5b3415604e57600080fd5b60546096565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000339050905600a165627a7a72305820475bf19dbf88fc79881a416f91cff80c81da30a1612184816e5dc01d989c13790029', 
+     gas: '4700000'
+   }, function (e, contract){
+    console.log(e, contract);
+    if (typeof contract.address !== 'undefined') {
+         console.log('Contract mined! address: ' + contract.address + ' transactionHash: ' + contract.transactionHash);
+    }
+ })
+var showContract = web3.eth.contract([{"constant":true,"inputs":[],"name":"showAddr","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"}]);
+var show = showContract.new(
+   {
+     from: web3.eth.accounts[0], 
+     data: '0x6060604052341561000f57600080fd5b60ca8061001d6000396000f300606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063a422bb1a146044575b600080fd5b3415604e57600080fd5b60546096565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000339050905600a165627a7a72305820475bf19dbf88fc79881a416f91cff80c81da30a1612184816e5dc01d989c13790029', 
+     gas: '4700000'
+   }, function (e, contract){
+    console.log(e, contract);
+    if (typeof contract.address !== 'undefined') {
+         console.log('Contract mined! address: ' + contract.address + ' transactionHash: ' + contract.transactionHash);
+    }
+ })
+show
+show.showAddr
+show.showAddr()
+eth.accounts
+show.showAddr()
+eth.getBalance(eth.accounts[1])
+miner.stop()
+miner.start(1)
+var showContract = web3.eth.contract([{"constant":true,"inputs":[],"name":"showAddr","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"}]);
+var show = showContract.new(
+   {
+     from: web3.eth.accounts[1], 
+     data: '0x6060604052341561000f57600080fd5b60ca8061001d6000396000f300606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063a422bb1a146044575b600080fd5b3415604e57600080fd5b60546096565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000339050905600a165627a7a72305820475bf19dbf88fc79881a416f91cff80c81da30a1612184816e5dc01d989c13790029', 
+     gas: '4700000'
+   }, function (e, contract){
+    console.log(e, contract);
+    if (typeof contract.address !== 'undefined') {
+         console.log('Contract mined! address: ' + contract.address + ' transactionHash: ' + contract.transactionHash);
+    }
+ })
+eth.getBalance(eth.accounts[1])
+show.showAddr
+show.showAddr()
+eth.default
+eth.defaultAccount
+eth.defaultAccount = eth.accounts[1]
+eth.getBalance(eth.accounts[1])
+var buyContract = web3.eth.contract([{"constant":false,"inputs":[{"name":"seller","type":"address"}],"name":"buyGoods","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"}]);
+var buy = buyContract.new(
+   {
+     from: web3.eth.accounts[1], 
+     data: '0x6060604052341561000f57600080fd5b61022a8061001e6000396000f300606060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806305c91a5f14610046575b600080fd5b341561005157600080fd5b61007d600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506100f8565b6040518080602001828103825283818151815260200191508051906020019080838360005b838110156100bd5780820151818401526020810190506100a2565b50505050905090810190601f1680156100ea5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6101006101ea565b6706f05b59d3b200003073ffffffffffffffffffffffffffffffffffffffff16311015610164576040805190810160405280600581526020017f4661696c2e00000000000000000000000000000000000000000000000000000081525090506101e5565b8173ffffffffffffffffffffffffffffffffffffffff166108fc6706f05b59d3b200009081150290604051600060405180830381858888f1935050505015156101ac57600080fd5b6040805190810160405280600881526020017f537563636565642e00000000000000000000000000000000000000000000000081525090505b919050565b6020604051908101604052806000815250905600a165627a7a723058204b51b1cf67a08534cf6768ac3f4ce46d6f492640420a98b15f1a6d77b6e65e850029', 
+     gas: '4700000'
+   }, function (e, contract){
+    console.log(e, contract);
+    if (typeof contract.address !== 'undefined') {
+         console.log('Contract mined! address: ' + contract.address + ' transactionHash: ' + contract.transactionHash);
+    }
+ })
+var buyContract = web3.eth.contract([{"constant":false,"inputs":[{"name":"seller","type":"address"}],"name":"buyGoods","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"}]);
+var buy = buyContract.new(
+   {
+     from: web3.eth.accounts[1], 
+     data: '0x6060604052341561000f57600080fd5b61022a8061001e6000396000f300606060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806305c91a5f14610046575b600080fd5b341561005157600080fd5b61007d600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506100f8565b6040518080602001828103825283818151815260200191508051906020019080838360005b838110156100bd5780820151818401526020810190506100a2565b50505050905090810190601f1680156100ea5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6101006101ea565b6706f05b59d3b200003073ffffffffffffffffffffffffffffffffffffffff16311015610164576040805190810160405280600581526020017f4661696c2e00000000000000000000000000000000000000000000000000000081525090506101e5565b8173ffffffffffffffffffffffffffffffffffffffff166108fc6706f05b59d3b200009081150290604051600060405180830381858888f1935050505015156101ac57600080fd5b6040805190810160405280600881526020017f537563636565642e00000000000000000000000000000000000000000000000081525090505b919050565b6020604051908101604052806000815250905600a165627a7a723058204b51b1cf67a08534cf6768ac3f4ce46d6f492640420a98b15f1a6d77b6e65e850029', 
+     gas: '4700000'
+   }, function (e, contract){
+    console.log(e, contract);
+    if (typeof contract.address !== 'undefined') {
+         console.log('Contract mined! address: ' + contract.address + ' transactionHash: ' + contract.transactionHash);
+    }
+ })
+eth.getBalance(eth.accounts[1])
+buy
+buy.buyGoods("0x913ed1f0a0b2c2499886791f974f251cea58e66a")
+eth.getBalance(eth.accounts[1])
+eth.accounts
+eth.getBalance(eth.accounts[1])
+compare
+miner.stop()
+eth.getBlock('latest')
+admin.peers
+admin.addPeer("enode://cd559f4174f415096874a0fb93c8afa6d5cc761f163e96d1c7240063f8f2b9eb9328e02725928109a2f91dcf7861acabf47ba9006e179a45ae7c397068707eda@192.168.89.101:1234")
+admin.peers
+admin.addPeer("enode://cd559f4174f415096874a0fb93c8afa6d5cc761f163e96d1c7240063f8f2b9eb9328e02725928109a2f91dcf7861acabf47ba9006e179a45ae7c397068707eda@192.168.89.101:1234")
+admin.peers
+admin.addPeer("enode://1c70aec3344ebce2c1ff0a28f2ba20c13f5be70d538f681b71f1458edbebc8c568427db5ac928e49656284ac024a02f3d60cc6c3965645077bb288ef99aa2178@192.168.89.101:1234")
+admin.peers
+miner.start(1)
+eth.accounts
+eth.getBalance(eth.accounts[2]
+)
+web3.fromWei(eth.getBalance(eth.accounts[0]), "ether")
+web3.fromWei(eth.getBalance(eth.accounts[3]), "ether")
+web3.fromWei(eth.getBalance(eth.accounts[2]), "ether")
+web3.fromWei(eth.getBalance(eth.accounts[0]), "ether")
+eth.sendTransaction({from: eth.accounts[0], to:"0x12e81f3eb4585352a79a47e7b3806e31f97e1376", value: web3.toWei(500, "ether")})
+miner.stop()
+miner.start(1)
+admin.peers
+miner.stop()
