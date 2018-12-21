@@ -2,6 +2,9 @@
     "files.associations": {
         "*.m": "matlab",
         "vector": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "sstream": "cpp",
+        "functional": "cpp",
+        "iosfwd": "cpp"
     }
 }
