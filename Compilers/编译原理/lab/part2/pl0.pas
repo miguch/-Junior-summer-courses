@@ -49,8 +49,8 @@ var
   ssym : array [char] of symbol;
   mnemonic : array [fct] of packed array [1..5] of char;
   declbegsys, statbegsys, facbegsys : symset;
-  srcfilename, outfilename, itmdfilename, resfilename: string;
-  fin, fout, fitmd, fres: text;
+  srcfilename, itmdfilename, resfilename: string;
+  fin, fitmd, fres: text;
 
   table : array [0..txmax] of
          record
@@ -73,22 +73,18 @@ begin
   begin
     write('PROGRAM INCOMPLETE');
     close(fin);
-    close(fout);
     close(fitmd);
     close(fres);
     exit;
   end;
   ll := 0; cc := 0; 
-  write(fout, cx : 5, ' ');
   while not eoln(fin) do
   begin
     ll := ll + 1; 
     read(fin, ch); 
-    write(fout, ch);
     line[ll] := ch;
   end;
   readln(fin);
-  writeln(fout);
   ll := ll + 1; 
   line[ll] := ' ';
 end;
@@ -160,7 +156,6 @@ begin
   begin 
     write('PROGRAM TOO LONG'); 
     close(fin);
-    close(fout);
     close(fitmd);
     close(fres);
     exit;
@@ -669,14 +664,11 @@ begin  {主程序}
   facbegsys := [ident, number, lparen];
   write('Source File: ');
   readln(srcfilename);
-  outfilename := 'out.txt';
   itmdfilename := 'intermediate.txt';
   resfilename := 'result.txt';
   assign(fin, srcfilename);
-  assign(fout, outfilename);
   assign(fitmd, itmdfilename);
   assign(fres, resfilename);
-  rewrite(fout);
   rewrite(fitmd);
   rewrite(fres);
   reset(fin);
@@ -688,7 +680,6 @@ begin  {主程序}
   if err = 0 then interpret
           else write('ERRORS IN PL/0 PROGRAM');
   close(fin);
-  close(fout);
   close(fitmd);
   close(fres);
 99 : writeln
